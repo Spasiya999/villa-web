@@ -4,6 +4,8 @@ use App\Http\Controllers\Admin\AboutVillaController;
 use App\Http\Controllers\Admin\HeroSectionController;
 use App\Http\Controllers\Admin\HighlightController;
 use App\Http\Controllers\Admin\RoomController;
+use App\Http\Controllers\Admin\GalleryController;
+use App\Http\Controllers\Admin\SettingController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () {
@@ -26,5 +28,12 @@ Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () 
         Route::resource('rooms', RoomController::class);
         Route::patch('rooms/{room}/toggle-availability', [RoomController::class, 'toggleAvailability'])
             ->name('rooms.toggle-availability');
+            
+        Route::resource('galleries', GalleryController::class)->except(['show']);
+        Route::patch('galleries/{gallery}/toggle-status', [GalleryController::class, 'toggleStatus'])
+            ->name('galleries.toggle-status');
+
+        Route::get('settings', [SettingController::class, 'edit'])->name('settings.edit');
+        Route::put('settings', [SettingController::class, 'update'])->name('settings.update');
     });
 });

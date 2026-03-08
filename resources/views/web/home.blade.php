@@ -83,42 +83,7 @@
     <!-- Rooms Section -->
     @include('web.components.rooms')
 
-    <!-- Featured Gallery Section -->
-    <section id="gallery" class="gallery-section">
-        <div class="gallery-header">
-            <h2 class="gallery-title">A Visual Journey</h2>
-            <p class="gallery-subtitle">Experience Villa Lanka through these moments</p>
-        </div>
-        <div class="gallery-grid">
-            <div class="gallery-item gallery-item-tall">
-                <img src="https://images.unsplash.com/photo-1598924957326-0446ac30341e"
-                    alt="Infinity pool overlooking ocean at sunset with loungers and tropical palms">
-            </div>
-            <div class="gallery-item">
-                <img src="https://img.rocket.new/generatedImages/rocket_gen_img_1adc52e66-1767448133159.png"
-                    alt="Master bedroom with king bed, white linens, and ocean view through glass doors">
-            </div>
-            <div class="gallery-item">
-                <img src="https://images.unsplash.com/photo-1721222204647-6280987830cc"
-                    alt="Open-air dining area with wooden table set for dinner overlooking tropical garden">
-            </div>
-            <div class="gallery-item gallery-item-wide">
-                <img src="https://images.unsplash.com/photo-1714258940168-fcaeb145b4b5"
-                    alt="Beachfront view of villa with palm trees and white sand beach at golden hour">
-            </div>
-            <div class="gallery-item">
-                <img src="https://images.unsplash.com/photo-1634580560239-1b0310ac8094"
-                    alt="Outdoor lounge area with daybed and cushions under tropical pergola">
-            </div>
-            <div class="gallery-item">
-                <img src="https://images.unsplash.com/photo-1609280069865-62f178e2c237"
-                    alt="Modern bathroom with freestanding tub and tropical garden view through window">
-            </div>
-        </div>
-        <div class="gallery-cta-container">
-            <a href="#contact" class="gallery-cta">View Full Gallery</a>
-        </div>
-    </section>
+    @include('web.components.gallery')
 
     <!-- Location Section -->
     <section id="location" class="location-section">

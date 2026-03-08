@@ -38,7 +38,7 @@ class RoomController extends Controller
             'bed_count' => 'required|integer|min:1',
             'sleeps' => 'required|integer|min:1',
             'description' => 'required|string',
-            'image_url' => 'required|url',
+            'image' => 'required|image|max:2048',
             'image_alt' => 'required|string',
             'rate_per_night' => 'nullable|numeric|min:0',
             'is_available' => 'boolean',
@@ -48,6 +48,11 @@ class RoomController extends Controller
         ]);
 
         $validated['slug'] = Str::slug($validated['name']);
+
+        if ($request->hasFile('image')) {
+            $path = $request->file('image')->store('rooms', 'public');
+            $validated['image_url'] = '/storage/' . $path;
+        }
 
         $room = Room::create($validated);
 
@@ -83,7 +88,7 @@ class RoomController extends Controller
             'bed_count' => 'required|integer|min:1',
             'sleeps' => 'required|integer|min:1',
             'description' => 'required|string',
-            'image_url' => 'required|url',
+            'image' => 'nullable|image|max:2048',
             'image_alt' => 'required|string',
             'rate_per_night' => 'nullable|numeric|min:0',
             'is_available' => 'boolean',
@@ -93,6 +98,14 @@ class RoomController extends Controller
         ]);
 
         $validated['slug'] = Str::slug($validated['name']);
+
+        if ($request->hasFile('image')) {
+            if ($room->image_url && str_contains($room->image_url, '/storage/')) {
+                Storage::disk('public')->delete(str_replace('/storage/', '', $room->image_url));
+            }
+            $path = $request->file('image')->store('rooms', 'public');
+            $validated['image_url'] = '/storage/' . $path;
+        }
 
         $room->update($validated);
 

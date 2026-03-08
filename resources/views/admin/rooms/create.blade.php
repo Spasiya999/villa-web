@@ -24,7 +24,7 @@
             </div>
         @endif
 
-        <form action="{{ route('admin.rooms.store') }}" method="POST" class="space-y-6" x-data="roomForm()">
+        <form action="{{ route('admin.rooms.store') }}" method="POST" enctype="multipart/form-data" class="space-y-6" x-data="roomForm()">
             @csrf
 
             <!-- Basic Info -->
@@ -95,11 +95,10 @@
                 <h2 class="text-lg font-bold text-gray-900 mb-4">Media</h2>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
-                        <label for="image_url" class="block text-sm font-medium text-gray-700 mb-2">
-                            Image URL <span class="text-red-500">*</span>
+                        <label for="image" class="block text-sm font-medium text-gray-700 mb-2">
+                            Room Image <span class="text-red-500">*</span>
                         </label>
-                        <input type="url" name="image_url" id="image_url" value="{{ old('image_url') }}"
-                            placeholder="https://example.com/image.jpg" required
+                        <input type="file" name="image" id="image" accept="image/*" required
                             class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                     </div>
 
@@ -122,7 +121,7 @@
                 <div class="space-y-3">
                     <template x-for="(amenity, index) in amenities" :key="index">
                         <div class="flex items-center space-x-2">
-                            <input type="text" x-model="amenities[index]" :name="`amenities[${index}]`" 
+                            <input type="text" x-model="amenity.value" :name="`amenities[${index}]`" 
                                 placeholder="e.g., Air Conditioning, Ensuite Bathroom"
                                 class="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                             <button type="button" @click="removeAmenity(index)" class="p-2 text-red-500 hover:text-red-700 hover:bg-red-50 rounded-lg transition-colors">
@@ -198,20 +197,25 @@
     @push('scripts')
     <script>
         document.addEventListener('alpine:init', () => {
-            Alpine.data('roomForm', () => ({
-                amenities: {!! json_encode(old('amenities', [''])) !!},
-                addAmenity() {
-                    this.amenities.push('');
-                },
-                removeAmenity(index) {
-                    if (this.amenities.length > 1) {
-                        this.amenities.splice(index, 1);
-                    } else {
-                        this.amenities[0] = '';
+            Alpine.data('roomForm', () => {
+                const initAmenities = {!! json_encode(old('amenities', [''])) !!};
+                const mappedAmenities = initAmenities.map(val => ({ value: val }));
+                
+                return {
+                    amenities: mappedAmenities.length ? mappedAmenities : [{ value: '' }],
+                    addAmenity() {
+                        this.amenities.push({ value: '' });
+                    },
+                    removeAmenity(index) {
+                        if (this.amenities.length > 1) {
+                            this.amenities.splice(index, 1);
+                        } else {
+                            this.amenities[0].value = '';
+                        }
                     }
-                }
-            }))
-        })
+                };
+            });
+        });
     </script>
     @endpush
 </x-app-layout>

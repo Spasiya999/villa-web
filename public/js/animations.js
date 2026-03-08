@@ -225,28 +225,16 @@
         const galleryItems = document.querySelectorAll('.gallery-item');
         if (!galleryItems.length) return;
 
-        // Stagger animation for gallery items
-        gsap.from(galleryItems, {
-            scale: 0.8,
-            opacity: 0,
-            duration: 0.8,
-            stagger: {
-                amount: 0.8,
-                from: 'random'
-            },
-            ease: 'power3.out',
-            scrollTrigger: {
-                trigger: '.gallery-grid',
-                start: 'top 75%',
-                toggleActions: 'play none none none'
-            }
-        });
-
         // Hover effects
         galleryItems.forEach(item => {
             const img = item.querySelector('img');
 
             item.addEventListener('mouseenter', function () {
+                gsap.to(item, {
+                    y: -8,
+                    duration: 0.4,
+                    ease: 'power2.out'
+                });
                 gsap.to(img, {
                     scale: 1.15,
                     duration: 0.5,
@@ -255,6 +243,11 @@
             });
 
             item.addEventListener('mouseleave', function () {
+                gsap.to(item, {
+                    y: 0,
+                    duration: 0.4,
+                    ease: 'power2.out'
+                });
                 gsap.to(img, {
                     scale: 1,
                     duration: 0.5,
