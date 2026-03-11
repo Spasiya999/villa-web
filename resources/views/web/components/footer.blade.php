@@ -1,5 +1,5 @@
     <!-- Footer -->
-    <footer id="contact" class="footer">
+    <footer class="footer">
         <div class="footer-content">
             <div class="footer-brand">
                 <h3 class="footer-logo">Villa Lanka</h3>
@@ -31,7 +31,7 @@
             </div>
         </div>
         <div class="footer-bottom">
-            <p class="footer-copyright">© 2026 Villa Lanka. All rights reserved.</p>
+            <p class="footer-copyright">© {{ date('Y') }} Villa Lanka. All rights reserved.</p>
             <div class="footer-legal">
                 <a href="#" class="footer-legal-link">Privacy Policy</a>
                 <a href="#" class="footer-legal-link">Terms of Service</a>

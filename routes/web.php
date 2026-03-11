@@ -4,7 +4,9 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('web.home');
+    $reviews = \App\Models\Review::where('is_active', true)->latest()->get();
+    $location = \App\Models\Location::getActive();
+    return view('web.home', compact('reviews', 'location'));
 });
 
 Route::get('/dashboard', function () {

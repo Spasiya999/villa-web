@@ -9,9 +9,8 @@
     <a href="{{ url('/') }}" class="nav-logo flex items-center">
         @if($siteLogo && $showLogo === '1')
             <img src="{{ $siteLogo }}" alt="{{ $siteName }}" class="h-10 object-contain max-w-[150px]">
-        @else
-            <span>{{ $siteName }}</span>
         @endif
+        <span>{{ $siteName }}</span>
     </a>
     <div class="nav-capsule" id="nav-capsule">
         <a href="#" class="nav-link active">Home</a>

@@ -583,6 +583,7 @@ video {
     --color-green: #10b981;
     --color-slate: #0f172a;
     --color-white: #ffffff;
+    --color-gold-light: #f3deae;
     --font-serif: "Playfair Display", serif;
     --font-sans: "Inter", sans-serif;
     --radius-lg: 2rem;
@@ -651,6 +652,19 @@ img {
     text-decoration: none;
     pointer-events: auto;
     letter-spacing: -0.02em;
+    display: flex;
+    align-items: center;
+    gap: 0.625rem;
+    line-height: 1;
+}
+
+.nav-logo img {
+    display: block;
+    height: 3rem;
+    width: auto;
+    max-width: 150px;
+    object-fit: contain;
+    flex-shrink: 0;
 }
 
 .nav-scrolled .nav-logo {
@@ -1267,7 +1281,7 @@ img {
 
 .gallery-section {
     padding: 5rem 1.5rem;
-    background: var(--color-sand);
+    background: var(--color-gold-light);
 }
 
 @media (min-width: 768px) {
