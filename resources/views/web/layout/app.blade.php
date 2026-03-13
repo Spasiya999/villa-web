@@ -81,26 +81,21 @@
     @endif
 
     <link rel="stylesheet" href="{{ asset('css/main.css') }}">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap"
-        rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('vendor/fonts/fonts.css') }}">
 
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+    <link href="{{ asset('vendor/aos/aos.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('vendor/animate-css/animate.min.css') }}" />
     <link rel="stylesheet" href="{{ asset('css/animations.css') }}">
 
     <!-- Owl Carousel CSS -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
-    <link rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css">
+    <link rel="stylesheet" href="{{ asset('vendor/owl-carousel/owl.carousel.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('vendor/owl-carousel/owl.theme.default.min.css') }}">
 
-    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="{{ asset('vendor/lucide/lucide.min.js') }}"></script>
 
     <!-- jQuery and Owl Carousel JS -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+    <script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>
+    <script src="{{ asset('vendor/owl-carousel/owl.carousel.min.js') }}"></script>
 </head>
 
 <body>
@@ -248,9 +243,9 @@
     <script src="{{ asset('js/navbar-scroll-enhanced.js') }}"></script>
 
     <!-- Animation Libraries JS -->
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script src="{{ asset('vendor/aos/aos.js') }}"></script>
+    <script src="{{ asset('vendor/gsap/gsap.min.js') }}"></script>
+    <script src="{{ asset('vendor/gsap/ScrollTrigger.min.js') }}"></script>
 
     <!-- Initialize AOS -->
     <script>
