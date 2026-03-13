@@ -10,13 +10,13 @@
     const mobileMenuClose = document.querySelector('.mobile-menu-close');
     const mobileMenuLinks = document.querySelectorAll('.mobile-menu-link');
 
-    // Sections to track
+    // Sections to track - matching IDs and classes in Blade components
     const sections = [
         { id: 'home', element: document.querySelector('.hero-section'), name: 'Home' },
         { id: 'rooms', element: document.querySelector('.rooms-section'), name: 'Rooms' },
-        { id: 'gallery', element: document.querySelector('.gallery-section'), name: 'Gallery' },
+        { id: 'gallery', element: document.querySelector('.vl-gallery'), name: 'Gallery' },
         { id: 'location', element: document.querySelector('.location-section'), name: 'Location' },
-        { id: 'booking', element: document.querySelector('.booking-section'), name: 'Contact' }
+        { id: 'contact', element: document.querySelector('.contact-section'), name: 'Contact' }
     ];
 
     // State
@@ -71,8 +71,6 @@
                 link.classList.add('active');
             } else if (href === `#${sectionId}`) {
                 link.classList.add('active');
-            } else if (sectionId === 'booking' && href === '#contact') {
-                link.classList.add('active');
             }
         });
 
@@ -84,8 +82,6 @@
             if (sectionId === 'home' && href === '#') {
                 link.classList.add('active');
             } else if (href === `#${sectionId}`) {
-                link.classList.add('active');
-            } else if (sectionId === 'booking' && href === '#contact') {
                 link.classList.add('active');
             }
         });

@@ -1,40 +1,66 @@
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="footer-content">
-            <div class="footer-brand">
-                <h3 class="footer-logo">Villa Lanka</h3>
-                <p class="footer-tagline">Your private paradise in Sri Lanka</p>
-            </div>
-            <div class="footer-contact">
-                <a href="tel:+94771234567" class="footer-link">
+@php
+    $siteName = \App\Models\Setting::get('site_name', 'Villa Lanka');
+    $siteDescription = \App\Models\Setting::get('site_description', 'Your private paradise in Sri Lanka');
+    $contactPhone = \App\Models\Setting::get('contact_phone', '+94 77 123 4567');
+    $contactEmail = \App\Models\Setting::get('contact_email', 'stay@villalanka.com');
+    $whatsappNumber = \App\Models\Setting::get('whatsapp_number', '94771234567');
+    $facebookUrl = \App\Models\Setting::get('facebook_url');
+    $instagramUrl = \App\Models\Setting::get('instagram_url');
+    $twitterUrl = \App\Models\Setting::get('twitter_url');
+@endphp
+
+<!-- Footer -->
+<footer class="footer">
+    <div class="footer-content">
+        <div class="footer-brand">
+            <h3 class="footer-logo">{{ $siteName }}</h3>
+            <p class="footer-tagline">{{ $siteDescription }}</p>
+        </div>
+        <div class="footer-contact">
+            @if($contactPhone)
+                <a href="tel:{{ str_replace(' ', '', $contactPhone) }}" class="footer-link">
                     <i data-lucide="phone"></i>
-                    +94 77 123 4567
+                    {{ $contactPhone }}
                 </a>
-                <a href="https://wa.me/94771234567" target="_blank" rel="noopener" class="footer-link">
+            @endif
+            @if($whatsappNumber)
+                <a href="https://wa.me/{{ $whatsappNumber }}" target="_blank" rel="noopener" class="footer-link">
                     <i data-lucide="message-circle"></i>
                     WhatsApp
                 </a>
-                <a href="mailto:stay@villalanka.com" class="footer-link">
+            @endif
+            @if($contactEmail)
+                <a href="mailto:{{ $contactEmail }}" class="footer-link">
                     <i data-lucide="mail"></i>
-                    stay@villalanka.com
+                    {{ $contactEmail }}
                 </a>
-            </div>
-            <div class="footer-social">
-                <a href="https://instagram.com/villalanka" target="_blank" rel="noopener" class="footer-social-link"
+            @endif
+        </div>
+        <div class="footer-social">
+            @if($instagramUrl)
+                <a href="{{ $instagramUrl }}" target="_blank" rel="noopener" class="footer-social-link"
                     aria-label="Instagram">
                     <i data-lucide="instagram"></i>
                 </a>
-                <a href="https://facebook.com/villalanka" target="_blank" rel="noopener" class="footer-social-link"
+            @endif
+            @if($facebookUrl)
+                <a href="{{ $facebookUrl }}" target="_blank" rel="noopener" class="footer-social-link"
                     aria-label="Facebook">
                     <i data-lucide="facebook"></i>
                 </a>
-            </div>
+            @endif
+            @if($twitterUrl)
+                <a href="{{ $twitterUrl }}" target="_blank" rel="noopener" class="footer-social-link" aria-label="Twitter">
+                    <i data-lucide="twitter"></i>
+                </a>
+            @endif
         </div>
-        <div class="footer-bottom">
-            <p class="footer-copyright">© {{ date('Y') }} Villa Lanka. All rights reserved.</p>
-            <div class="footer-legal">
-                <a href="#" class="footer-legal-link">Privacy Policy</a>
-                <a href="#" class="footer-legal-link">Terms of Service</a>
-            </div>
+    </div>
+    <div class="footer-bottom">
+        <p class="footer-copyright">© {{ date('Y') }} {{ $siteName }}. All rights reserved.</p>
+        <div class="footer-legal">
+            <a href="#" class="footer-legal-link">Privacy Policy</a>
+            <a href="#" class="footer-legal-link">Terms of Service</a>
         </div>
-    </footer>
+    </div>
+</footer>

@@ -9,6 +9,8 @@ Route::get('/', function () {
     return view('web.home', compact('reviews', 'location'));
 });
 
+Route::post('/contact', [App\Http\Controllers\Web\ContactController::class, 'store'])->name('contact.store');
+
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');

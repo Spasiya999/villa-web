@@ -121,47 +121,15 @@
             Location
         </a>
 
-        {{-- <!-- Divider -->
-        <div class="py-4">
-            <div class="border-t border-slate-700"></div>
-        </div>
-
-        <!-- Bookings -->
-        <div class="pt-2 pb-2">
-            <p class="px-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">Bookings</p>
-        </div>
-
-        <a href=""
-            class="flex items-center px-4 py-3 text-gray-300 hover:bg-slate-700/50 hover:text-white rounded-lg transition-all duration-200 {{ request()->routeIs('admin.bookings.*') ? 'bg-slate-700 text-white' : '' }}">
-            <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-            </svg>
-            All Bookings
-        </a>
-
-        <a href=""
-            class="flex items-center px-4 py-3 text-gray-300 hover:bg-slate-700/50 hover:text-white rounded-lg transition-all duration-200 {{ request()->routeIs('admin.bookings.calendar') ? 'bg-slate-700 text-white' : '' }}">
-            <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-            </svg>
-            Calendar View
-        </a>
-
-        <a href=""
-            class="flex items-center px-4 py-3 text-gray-300 hover:bg-slate-700/50 hover:text-white rounded-lg transition-all duration-200 {{ request()->routeIs('admin.inquiries.*') ? 'bg-slate-700 text-white' : '' }}">
+        <!-- Contact Inquiries -->
+        <a href="{{ route('admin.contact-inquiries.index') }}"
+            class="flex items-center px-4 py-3 text-gray-300 hover:bg-slate-700/50 hover:text-white rounded-lg transition-all duration-200 {{ request()->routeIs('admin.contact-inquiries.*') ? 'bg-slate-700 text-white' : '' }}">
             <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                     d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
             </svg>
-            Inquiries
-        </a> --}}
-
-        <!-- Divider -->
-        <div class="py-4">
-            <div class="border-t border-slate-700"></div>
-        </div>
+            Contact Inquiries
+        </a>
 
         <!-- Settings -->
         <div x-data="{ open: false }">
@@ -186,23 +154,15 @@
                     class="flex items-center px-4 py-2 text-sm rounded-lg transition-colors {{ request()->routeIs('admin.settings.*') ? 'text-white bg-slate-700/50' : 'text-gray-400 hover:text-white hover:bg-slate-700/30' }}">
                     General Settings
                 </a>
-                <a href=""
-                    class="flex items-center px-4 py-2 text-sm text-gray-400 hover:text-white hover:bg-slate-700/30 rounded-lg">
-                    Contact Info
-                </a>
-                <a href=""
-                    class="flex items-center px-4 py-2 text-sm text-gray-400 hover:text-white hover:bg-slate-700/30 rounded-lg">
-                    Social Media
-                </a>
-                <a href=""
-                    class="flex items-center px-4 py-2 text-sm text-gray-400 hover:text-white hover:bg-slate-700/30 rounded-lg">
+                <a href="{{ route('admin.seo.edit') }}"
+                    class="flex items-center px-4 py-2 text-sm rounded-lg transition-colors {{ request()->routeIs('admin.seo.*') ? 'text-white bg-slate-700/50' : 'text-gray-400 hover:text-white hover:bg-slate-700/30' }}">
                     SEO Settings
                 </a>
             </div>
         </div>
 
         <!-- View Website -->
-        <a href="" target="_blank"
+        <a href="{{ url('/') }}" target="_blank"
             class="flex items-center px-4 py-3 text-gray-300 hover:bg-slate-700/50 hover:text-white rounded-lg transition-all duration-200">
             <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"

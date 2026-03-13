@@ -1,9 +1,20 @@
+@php
+    $contactAddress = \App\Models\Setting::get('contact_address', '123 Luxury Lane, Bentota, Sri Lanka');
+    $contactEmail = \App\Models\Setting::get('contact_email', 'hello@villaspasiya.com');
+    $contactPhone = \App\Models\Setting::get('contact_phone', '+94 77 123 4567');
+    $whatsappNumber  = \App\Models\Setting::get('whatsapp_number', '94771234567');
+    $socialFacebook  = \App\Models\Setting::get('social_facebook', 'https://facebook.com/villaspasiya');
+    $socialInstagram = \App\Models\Setting::get('social_instagram', 'https://instagram.com/villaspasiya');
+    $socialTwitter   = \App\Models\Setting::get('social_twitter', '');
+    $socialYoutube   = \App\Models\Setting::get('social_youtube', '');
+@endphp
 <section id="contact" class="contact-section">
     <div class="contact-container">
         <div class="contact-header">
             <span class="contact-badge">Contact Us</span>
             <h2 class="contact-title">Your Private Escape Awaits</h2>
-            <p class="contact-subtitle">Experience luxury redefined in the heart of Sri Lanka. Book your stay or send us an inquiry today.</p>
+            <p class="contact-subtitle">Experience luxury redefined in the heart of Sri Lanka. Book your stay or send us
+                an inquiry today.</p>
         </div>
 
         <div class="contact-content">
@@ -14,7 +25,7 @@
                     </div>
                     <div class="info-text">
                         <h3>Our Location</h3>
-                        <p>123 Luxury Lane, Bentota, Sri Lanka</p>
+                        <p>{{ $contactAddress }}</p>
                     </div>
                 </div>
                 <div class="info-item">
@@ -23,7 +34,7 @@
                     </div>
                     <div class="info-text">
                         <h3>Email Us</h3>
-                        <p>hello@villaspasiya.com</p>
+                        <p>{{ $contactEmail }}</p>
                     </div>
                 </div>
                 <div class="info-item">
@@ -32,13 +43,39 @@
                     </div>
                     <div class="info-text">
                         <h3>Call Us</h3>
-                        <p>+94 77 123 4567</p>
+                        <p>{{ $contactPhone }}</p>
+                    </div>
+                </div>
+
+                <div class="social-links-card">
+                    <p>Follow us</p>
+                    <div class="social-icons">
+                        @if($socialFacebook)
+                        <a href="{{ $socialFacebook }}" target="_blank" class="social-icon-btn social-facebook" aria-label="Facebook">
+                            <i data-lucide="facebook"></i>
+                        </a>
+                        @endif
+                        @if($socialInstagram)
+                        <a href="{{ $socialInstagram }}" target="_blank" class="social-icon-btn social-instagram" aria-label="Instagram">
+                            <i data-lucide="instagram"></i>
+                        </a>
+                        @endif
+                        @if($socialTwitter)
+                        <a href="{{ $socialTwitter }}" target="_blank" class="social-icon-btn social-twitter" aria-label="Twitter / X">
+                            <i data-lucide="twitter"></i>
+                        </a>
+                        @endif
+                        @if($socialYoutube)
+                        <a href="{{ $socialYoutube }}" target="_blank" class="social-icon-btn social-youtube" aria-label="YouTube">
+                            <i data-lucide="youtube"></i>
+                        </a>
+                        @endif
                     </div>
                 </div>
 
                 <div class="whatsapp-card">
                     <p>Prefer instant messaging?</p>
-                    <a href="https://wa.me/94771234567" target="_blank" class="whatsapp-btn">
+                    <a href="https://wa.me/{{ $whatsappNumber }}" target="_blank" class="whatsapp-btn">
                         <i data-lucide="message-circle"></i>
                         <span>Chat on WhatsApp</span>
                     </a>
@@ -53,15 +90,16 @@
                     </div>
                 @endif
 
-                <form action="#" method="POST" class="luxury-form">
+                <form action="{{ route('contact.store') }}" method="POST" class="luxury-form">
                     @csrf
                     <div class="form-grid">
                         <div class="form-group">
                             <label for="name">Full Name</label>
                             <div class="input-wrapper">
                                 <i data-lucide="user" class="input-icon"></i>
-                                <input type="text" id="name" name="name" class="luxury-input @error('name') input-error @enderror"
-                                    placeholder="John Doe" value="{{ old('name') }}" required />
+                                <input type="text" id="name" name="name"
+                                    class="luxury-input @error('name') input-error @enderror" placeholder="John Doe"
+                                    value="{{ old('name') }}" required />
                             </div>
                             @error('name')<span class="error-text">{{ $message }}</span>@enderror
                         </div>
@@ -70,7 +108,8 @@
                             <label for="email">Email Address</label>
                             <div class="input-wrapper">
                                 <i data-lucide="mail" class="input-icon"></i>
-                                <input type="email" id="email" name="email" class="luxury-input @error('email') input-error @enderror"
+                                <input type="email" id="email" name="email"
+                                    class="luxury-input @error('email') input-error @enderror"
                                     placeholder="john@example.com" value="{{ old('email') }}" required />
                             </div>
                             @error('email')<span class="error-text">{{ $message }}</span>@enderror
@@ -81,8 +120,9 @@
                         <label for="phone">Phone Number (Optional)</label>
                         <div class="input-wrapper">
                             <i data-lucide="phone" class="input-icon"></i>
-                            <input type="tel" id="phone" name="phone" class="luxury-input @error('phone') input-error @enderror"
-                                placeholder="+94 77 123 4567" value="{{ old('phone') }}" />
+                            <input type="tel" id="phone" name="phone"
+                                class="luxury-input @error('phone') input-error @enderror" placeholder="+94 77 123 4567"
+                                value="{{ old('phone') }}" />
                         </div>
                         @error('phone')<span class="error-text">{{ $message }}</span>@enderror
                     </div>
@@ -90,8 +130,10 @@
                     <div class="form-group">
                         <label for="message">Your Message</label>
                         <div class="input-wrapper">
-                            <textarea id="message" name="message" rows="4" class="luxury-input @error('message') input-error @enderror"
-                                placeholder="Tell us about your travel plans..." required>{{ old('message') }}</textarea>
+                            <textarea id="message" name="message" rows="4"
+                                class="luxury-input @error('message') input-error @enderror"
+                                placeholder="Tell us about your travel plans..."
+                                required>{{ old('message') }}</textarea>
                         </div>
                         @error('message')<span class="error-text">{{ $message }}</span>@enderror
                     </div>
@@ -175,6 +217,7 @@
         .contact-content {
             grid-template-columns: 1fr;
         }
+
         .contact-title {
             font-size: 2.5rem;
         }
@@ -223,6 +266,58 @@
         color: var(--contact-text-muted);
         font-size: 0.95rem;
     }
+
+    .social-links-card {
+        margin-top: 30px;
+        padding-top: 15px;
+        border-top: 1px solid var(--contact-border);
+    }
+
+    .social-links-card p {
+        color: var(--contact-text-muted);
+        font-size: 0.9rem;
+        margin-bottom: 14px;
+    }
+
+    .social-icons {
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+    }
+
+    .social-icon-btn {
+        width: 44px;
+        height: 44px;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        color: white;
+    }
+
+    .social-icon-btn i {
+        width: 20px;
+        height: 20px;
+    }
+
+    .social-icon-btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+    }
+
+    .social-facebook  { background: #1877f2; }
+    .social-facebook:hover  { background: #0d65d9; }
+
+    .social-instagram { background: linear-gradient(135deg, #f58529, #dd2a7b, #8134af); }
+    .social-instagram:hover { filter: brightness(1.1); }
+
+    .social-twitter   { background: #000000; }
+    .social-twitter:hover   { background: #333333; }
+
+    .social-youtube   { background: #ff0000; }
+    .social-youtube:hover   { background: #cc0000; }
 
     .whatsapp-card {
         margin-top: 40px;
@@ -352,7 +447,7 @@
         box-shadow: 0 0 0 4px var(--contact-accent-soft);
     }
 
-    .luxury-input:focus + .input-icon {
+    .luxury-input:focus+.input-icon {
         color: var(--contact-accent);
     }
 

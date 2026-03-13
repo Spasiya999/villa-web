@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\RoomController;
 use App\Http\Controllers\Admin\GalleryController;
 use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\LocationController;
+use App\Http\Controllers\Admin\SeoController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () {
@@ -41,7 +42,12 @@ Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () 
         Route::patch('reviews/{review}/toggle-status', [App\Http\Controllers\Admin\ReviewController::class, 'toggleStatus'])
             ->name('reviews.toggle-status');
 
+        Route::resource('contact-inquiries', App\Http\Controllers\Admin\ContactInquiryController::class)->only(['index', 'show', 'update', 'destroy']);
+        
         Route::get('settings', [SettingController::class, 'edit'])->name('settings.edit');
         Route::put('settings', [SettingController::class, 'update'])->name('settings.update');
+
+        Route::get('seo', [SeoController::class, 'edit'])->name('seo.edit');
+        Route::put('seo', [SeoController::class, 'update'])->name('seo.update');
     });
 });

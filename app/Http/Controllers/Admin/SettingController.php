@@ -30,13 +30,28 @@ class SettingController extends Controller
             'site_description' => 'nullable|string',
             'contact_email' => 'nullable|email|max:255',
             'contact_phone' => 'nullable|string|max:50',
+            'contact_address' => 'nullable|string|max:500',
+            'whatsapp_number' => 'nullable|string|max:50',
+            'facebook_url' => 'nullable|url|max:255',
+            'instagram_url' => 'nullable|url|max:255',
+            'twitter_url' => 'nullable|url|max:255',
             'site_logo' => 'nullable|image|max:5120', // allow up to 5MB
             'remove_logo' => 'nullable|boolean',
             'show_logo' => 'nullable|boolean',
         ]);
 
         // Process standard text inputs
-        $textSettings = ['site_name', 'site_description', 'contact_email', 'contact_phone'];
+        $textSettings = [
+            'site_name', 
+            'site_description', 
+            'contact_email', 
+            'contact_phone', 
+            'contact_address', 
+            'whatsapp_number', 
+            'facebook_url', 
+            'instagram_url', 
+            'twitter_url'
+        ];
         foreach ($textSettings as $key) {
             if ($request->has($key)) {
                 Setting::set($key, $validated[$key]);

@@ -2,7 +2,7 @@
     $hero = \App\Models\HeroSection::getActive();
 @endphp
 
-<section class="hero-section">
+<section id="home" class="hero-section">
     <div class="hero-image-container">
         @if ($hero && $hero->hero_video)
             <video src="{{ Storage::url($hero->hero_video) }}" @if($hero->hero_image)

@@ -128,12 +128,74 @@
                     </div>
 
                     <div class="col-span-1 md:col-span-2">
+                        <label for="contact_address" class="block text-sm font-medium text-gray-700 mb-2">
+                            Physical Address
+                        </label>
+                        <textarea name="contact_address" id="contact_address" rows="2"
+                            placeholder="123 Luxury Lane, Bentota, Sri Lanka"
+                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">{{ old('contact_address', $settings['contact_address'] ?? '') }}</textarea>
+                        @error('contact_address') <span class="text-sm text-red-500">{{ $message }}</span> @enderror
+                    </div>
+
+                    <div>
+                        <label for="whatsapp_number" class="block text-sm font-medium text-gray-700 mb-2">
+                            WhatsApp Number (with country code)
+                        </label>
+                        <input type="text" name="whatsapp_number" id="whatsapp_number"
+                            value="{{ old('whatsapp_number', $settings['whatsapp_number'] ?? '') }}"
+                            placeholder="94771234567"
+                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                        <p class="mt-1 text-xs text-gray-500">FORMAT: Only numbers, no + or spaces (e.g., 94771234567)</p>
+                        @error('whatsapp_number') <span class="text-sm text-red-500">{{ $message }}</span> @enderror
+                    </div>
+
+                    <div class="col-span-1 md:col-span-2">
                         <label for="site_description" class="block text-sm font-medium text-gray-700 mb-2">
                             Short Description / SEO Meta
                         </label>
                         <textarea name="site_description" id="site_description" rows="3"
                             class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">{{ old('site_description', $settings['site_description'] ?? '') }}</textarea>
                         @error('site_description') <span class="text-sm text-red-500">{{ $message }}</span> @enderror
+                    </div>
+                </div>
+            </div>
+
+            <!-- Social Media Section -->
+            <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+                <h2 class="text-lg font-bold text-gray-900 mb-4 border-b border-gray-100 pb-2">Social Media Links</h2>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label for="facebook_url" class="block text-sm font-medium text-gray-700 mb-2">
+                            Facebook URL
+                        </label>
+                        <input type="url" name="facebook_url" id="facebook_url"
+                            value="{{ old('facebook_url', $settings['facebook_url'] ?? '') }}"
+                            placeholder="https://facebook.com/villalanka"
+                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                        @error('facebook_url') <span class="text-sm text-red-500">{{ $message }}</span> @enderror
+                    </div>
+
+                    <div>
+                        <label for="instagram_url" class="block text-sm font-medium text-gray-700 mb-2">
+                            Instagram URL
+                        </label>
+                        <input type="url" name="instagram_url" id="instagram_url"
+                            value="{{ old('instagram_url', $settings['instagram_url'] ?? '') }}"
+                            placeholder="https://instagram.com/villalanka"
+                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                        @error('instagram_url') <span class="text-sm text-red-500">{{ $message }}</span> @enderror
+                    </div>
+
+                    <div>
+                        <label for="twitter_url" class="block text-sm font-medium text-gray-700 mb-2">
+                            Twitter / X URL
+                        </label>
+                        <input type="url" name="twitter_url" id="twitter_url"
+                            value="{{ old('twitter_url', $settings['twitter_url'] ?? '') }}"
+                            placeholder="https://twitter.com/villalanka"
+                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                        @error('twitter_url') <span class="text-sm text-red-500">{{ $message }}</span> @enderror
                     </div>
                 </div>
             </div>

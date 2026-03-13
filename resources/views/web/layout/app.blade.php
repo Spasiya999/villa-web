@@ -1,11 +1,85 @@
 <!DOCTYPE html>
 <html lang="en">
 
+@php
+    $siteName = \App\Models\Setting::get('site_name', 'Villa Lanka');
+    $metaTitle = \App\Models\Setting::get('meta_title');
+    $metaDescription = \App\Models\Setting::get('meta_description', \App\Models\Setting::get('site_description'));
+    $metaKeywords = \App\Models\Setting::get('meta_keywords');
+    $ogImage = \App\Models\Setting::get('og_image', asset('images/seo-preview.jpg'));
+    $favicon = \App\Models\Setting::get('favicon', asset('favicon.png'));
+    $robotsMeta = \App\Models\Setting::get('robots_meta', 'index, follow');
+    $gaId = \App\Models\Setting::get('google_analytics_id');
+    $gtmId = \App\Models\Setting::get('google_tag_manager_id');
+    $verificationId = \App\Models\Setting::get('google_site_verification_id');
+    $headerScripts = \App\Models\Setting::get('custom_header_scripts');
+    $bodyScripts = \App\Models\Setting::get('custom_body_scripts');
+@endphp
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>Villa Lanka | Your Private Paradise in Sri Lanka</title>
+
+    @if($gtmId)
+        <!-- Google Tag Manager -->
+        <script>(function (w, d, s, l, i) {
+                w[l] = w[l] || []; w[l].push({
+                    'gtm.start':
+                        new Date().getTime(), event: 'gtm.js'
+                }); var f = d.getElementsByTagName(s)[0],
+                    j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
+                        'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
+            })(window, document, 'script', 'dataLayer', '{{ $gtmId }}');</script>
+        <!-- End Google Tag Manager -->
+    @endif
+
+    @if($gaId)
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+        <script async src="https://www.googletagmanager.com/gtag.js?id={{ $gaId }}"></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag() { dataLayer.push(arguments); }
+            gtag('js', new Date());
+            gtag('config', '{{ $gaId }}');
+        </script>
+    @endif
+
+    <title>{{ $metaTitle ?: ($siteName . ' | Your Private Paradise in Sri Lanka') }}</title>
+
+    @if($metaDescription)
+        <meta name="description" content="{{ $metaDescription }}">
+    @endif
+
+    @if($metaKeywords)
+        <meta name="keywords" content="{{ $metaKeywords }}">
+    @endif
+
+    @if($verificationId)
+        <meta name="google-site-verification" content="{{ $verificationId }}">
+    @endif
+
+    <link rel="canonical" href="{{ url()->current() }}">
+
+    <meta property="og:title" content="{{ $metaTitle ?: $siteName }}">
+    <meta property="og:description" content="{{ $metaDescription }}">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{{ url()->current() }}">
+    <meta property="og:image" content="{{ $ogImage }}">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{{ $metaTitle ?: $siteName }}">
+    <meta name="twitter:description" content="{{ $metaDescription }}">
+    <meta name="twitter:image" content="{{ $ogImage }}">
+
+    <link rel="icon" type="image/png" href="{{ $favicon }}">
+
+    <meta name="robots" content="{{ $robotsMeta }}">
+
+    @if($headerScripts)
+        {!! $headerScripts !!}
+    @endif
+
     <link rel="stylesheet" href="{{ asset('css/main.css') }}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -27,14 +101,20 @@
     <!-- jQuery and Owl Carousel JS -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
-    {{--
-    <script type="module" async
-        src="https://static.rocket.new/rocket-web.js?_cfg=https%3A%2F%2Fvillalank2485back.builtwithrocket.new&_be=https%3A%2F%2Fappanalytics.rocket.new&_v=0.1.14">
-        </script>
-    <script type="module" defer src="https://static.rocket.new/rocket-shot.js?v=0.0.2"></script> --}}
 </head>
 
 <body>
+    @if($gtmId)
+        <!-- Google Tag Manager (noscript) -->
+        <noscript><iframe src="https://www.googletagmanager.com/ns.html?id={{ $gtmId }}" height="0" width="0"
+                style="display:none;visibility:hidden"></iframe></noscript>
+        <!-- End Google Tag Manager (noscript) -->
+    @endif
+
+    @if($bodyScripts)
+        {!! $bodyScripts !!}
+    @endif
+
     @include('web.components.navigation')
 
     @include('web.components.whatssapp')
