@@ -87,7 +87,7 @@
                                     value="{{ old('name') }}" required />
                             </div>
                             @error('name')<span class="error-text">{{ $message }}</span>@enderror
-                        </div>
+                        </div> 
 
                         <div class="form-group">
                             <label for="email">Email Address</label>
