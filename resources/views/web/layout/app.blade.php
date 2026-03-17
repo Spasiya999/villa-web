@@ -80,29 +80,6 @@
         {!! $headerScripts !!}
     @endif
 
-    <!-- Schema Markup -->
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "LodgingBusiness",
-      "name": "Moonstone Herbal Villa",
-      "description": "Private villa with swimming pool and river views near Galle, Sri Lanka. Eco-friendly herbal garden surroundings, peaceful retreat, ~2 km from the beach.",
-      "address": {
-        "@type": "PostalAddress",
-        "addressLocality": "Galle",
-        "addressRegion": "Southern Province",
-        "addressCountry": "LK"
-      },
-      "amenityFeature": [
-        {"@type":"LocationFeatureSpecification","name":"Private pool"},
-        {"@type":"LocationFeatureSpecification","name":"River view"},
-        {"@type":"LocationFeatureSpecification","name":"Herbal garden"},
-        {"@type":"LocationFeatureSpecification","name":"WiFi"}
-      ],
-      "url": "{{ url('/') }}"
-    }
-    </script>
-
     <link rel="stylesheet" href="{{ asset('css/main.css') }}">
     <link rel="stylesheet" href="{{ asset('vendor/fonts/fonts.css') }}">
 
