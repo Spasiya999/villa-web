@@ -70,10 +70,16 @@
 
 <script>
     $(document).ready(function () {
-        $(".reviews-grid").on('initialized.owl.carousel changed.owl.carousel', function () {
+        $(".reviews-grid").on('initialized.owl.carousel changed.owl.carousel resized.owl.carousel', function (e) {
             if (typeof lucide !== 'undefined') {
                 setTimeout(() => lucide.createIcons(), 50);
             }
+            // Add accessible names to owl-dots for screen readers
+            setTimeout(() => {
+                $(e.target).find('.owl-dot').each(function(index) {
+                    $(this).attr('aria-label', 'Go to slide ' + (index + 1));
+                });
+            }, 50);
         }).owlCarousel({
             loop: true,
             margin: 24,

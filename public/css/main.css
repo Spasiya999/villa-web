@@ -1052,7 +1052,7 @@ img {
     display: inline-flex;
     align-items: center;
     padding: 1rem 2.5rem;
-    background: var(--color-ocean);
+    background: #026ca3;
     color: var(--color-white);
     border-radius: 0.75rem;
     font-weight: 600;
@@ -1063,7 +1063,7 @@ img {
 }
 
 .hero-cta-primary:hover {
-    background: #0284c7;
+    background: #014c75;
     transform: translateY(-2px);
     box-shadow: 0 10px 25px rgba(14, 165, 233, 0.4);
 }

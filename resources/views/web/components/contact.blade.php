@@ -140,7 +140,7 @@
         --contact-accent-soft: rgba(15, 153, 153, 0.1);
         --contact-bg: #f8fafc;
         --contact-card-bg: #ffffff;
-        --contact-text-muted: #64748b;
+        --contact-text-muted: #475569;
         --contact-border: #e2e8f0;
     }
 
@@ -167,7 +167,7 @@
         display: inline-block;
         padding: 6px 16px;
         background: var(--contact-accent-soft);
-        color: var(--contact-accent);
+        color: #074b4b;
         border-radius: 100px;
         font-size: 0.85rem;
         font-weight: 600;
@@ -342,7 +342,7 @@
         justify-content: center;
         gap: 10px;
         background: #25d366;
-        color: white;
+        color: #111827;
         padding: 14px 24px;
         border-radius: 12px;
         text-decoration: none;

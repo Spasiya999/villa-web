@@ -8,7 +8,7 @@
 
     <a href="{{ url('/') }}" class="nav-logo flex items-center">
         @if($siteLogo && $showLogo === '1')
-            <img src="{{ $siteLogo }}" alt="{{ $siteName }}" class="h-10 object-contain max-w-[150px]">
+            <img src="{{ $siteLogo }}" alt="Moon Stone" class="h-10 object-contain max-w-[150px]">
         @endif
         <span>{{ $siteName }}</span>
     </a>

@@ -21,7 +21,8 @@
             </div>
             <div class="location-map">
                 <iframe src="{{ $location->map_embed_url }}" width="100%" height="450"
-                    style="border:0; border-radius: 2rem;" allowfullscreen="" loading="lazy">
+                    style="border:0; border-radius: 2rem;" allowfullscreen="" loading="lazy"
+                    title="Location map for {{ $location->title }}">
                 </iframe>
             </div>
         </div>
