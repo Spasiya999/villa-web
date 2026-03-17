@@ -1,6 +1,6 @@
 deployment:
   tasks:
-    - export DEPLOYPATH=/home2/mydemosi/public_html
+    - export DEPLOYPATH=/home2/mydemosi/moonstoneherbalvilla.com
 
     - /bin/cp -R app $DEPLOYPATH
     - /bin/cp -R bootstrap $DEPLOYPATH
