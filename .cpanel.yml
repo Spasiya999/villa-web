@@ -1,0 +1,6 @@
+deployment:
+  tasks:
+    - export DEPLOYPATH=/home2/mydemosi/moonstoneherbalvilla.com
+    - /bin/cp -R * $DEPLOYPATH
+    - /usr/local/bin/php /home2/mydemosi/moonstoneherbalvilla.com/artisan optimize:clear --ansi
+    - /usr/local/bin/php /home2/mydemosi/moonstoneherbalvilla.com/artisan db:seed --class=SocialLinkSeeder --force --ansi
