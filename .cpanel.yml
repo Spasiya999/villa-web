@@ -1,6 +1,6 @@
 deployment:
   tasks:
-    - export DEPLOYPATH=/home2/mydemosi/moonstoneherbalvilla.com
+    - export DEPLOYPATH=/home2/mydemosi/villa-web
 
     - /bin/cp -R app $DEPLOYPATH
     - /bin/cp -R bootstrap $DEPLOYPATH
