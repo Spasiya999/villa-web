@@ -4,9 +4,8 @@
     $contactPhone = \App\Models\Setting::get('contact_phone', '+94 77 123 4567');
     $contactEmail = \App\Models\Setting::get('contact_email', 'stay@villalanka.com');
     $whatsappNumber = \App\Models\Setting::get('whatsapp_number', '94771234567');
-    $facebookUrl = \App\Models\Setting::get('facebook_url');
-    $instagramUrl = \App\Models\Setting::get('instagram_url');
-    $twitterUrl = \App\Models\Setting::get('twitter_url');
+
+    $socialLinks = \App\Models\SocialLink::where('is_active', true)->ordered()->get();
 @endphp
 
 <!-- Footer -->
@@ -37,23 +36,12 @@
             @endif
         </div>
         <div class="footer-social">
-            @if($instagramUrl)
-                <a href="{{ $instagramUrl }}" target="_blank" rel="noopener" class="footer-social-link"
-                    aria-label="Instagram">
-                    <i data-lucide="instagram"></i>
+            @foreach($socialLinks as $link)
+                <a href="{{ $link->url }}" target="_blank" rel="noopener" class="footer-social-link"
+                    aria-label="{{ $link->platform }}">
+                    <i data-lucide="{{ $link->icon }}"></i>
                 </a>
-            @endif
-            @if($facebookUrl)
-                <a href="{{ $facebookUrl }}" target="_blank" rel="noopener" class="footer-social-link"
-                    aria-label="Facebook">
-                    <i data-lucide="facebook"></i>
-                </a>
-            @endif
-            @if($twitterUrl)
-                <a href="{{ $twitterUrl }}" target="_blank" rel="noopener" class="footer-social-link" aria-label="Twitter">
-                    <i data-lucide="twitter"></i>
-                </a>
-            @endif
+            @endforeach
         </div>
     </div>
     <div class="footer-bottom">

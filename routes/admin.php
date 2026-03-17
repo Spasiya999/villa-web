@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\GalleryController;
 use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\LocationController;
 use App\Http\Controllers\Admin\SeoController;
+use App\Http\Controllers\Admin\SocialLinkController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () {
@@ -49,5 +50,8 @@ Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () 
 
         Route::get('seo', [SeoController::class, 'edit'])->name('seo.edit');
         Route::put('seo', [SeoController::class, 'update'])->name('seo.update');
+
+        Route::resource('social-links', SocialLinkController::class)->except(['show']);
+        Route::post('social-links/update-order', [SocialLinkController::class, 'updateOrder'])->name('social-links.update-order');
     });
 });

@@ -2,11 +2,9 @@
     $contactAddress = \App\Models\Setting::get('contact_address', '123 Luxury Lane, Bentota, Sri Lanka');
     $contactEmail = \App\Models\Setting::get('contact_email', 'hello@villaspasiya.com');
     $contactPhone = \App\Models\Setting::get('contact_phone', '+94 77 123 4567');
-    $whatsappNumber  = \App\Models\Setting::get('whatsapp_number', '94771234567');
-    $socialFacebook  = \App\Models\Setting::get('social_facebook', 'https://facebook.com/villaspasiya');
-    $socialInstagram = \App\Models\Setting::get('social_instagram', 'https://instagram.com/villaspasiya');
-    $socialTwitter   = \App\Models\Setting::get('social_twitter', '');
-    $socialYoutube   = \App\Models\Setting::get('social_youtube', '');
+    $whatsappNumber = \App\Models\Setting::get('whatsapp_number', '94771234567');
+
+    $socialLinks = \App\Models\SocialLink::where('is_active', true)->ordered()->get();
 @endphp
 <section id="contact" class="contact-section">
     <div class="contact-container">
@@ -50,26 +48,13 @@
                 <div class="social-links-card">
                     <p>Follow us</p>
                     <div class="social-icons">
-                        @if($socialFacebook)
-                        <a href="{{ $socialFacebook }}" target="_blank" class="social-icon-btn social-facebook" aria-label="Facebook">
-                            <i data-lucide="facebook"></i>
-                        </a>
-                        @endif
-                        @if($socialInstagram)
-                        <a href="{{ $socialInstagram }}" target="_blank" class="social-icon-btn social-instagram" aria-label="Instagram">
-                            <i data-lucide="instagram"></i>
-                        </a>
-                        @endif
-                        @if($socialTwitter)
-                        <a href="{{ $socialTwitter }}" target="_blank" class="social-icon-btn social-twitter" aria-label="Twitter / X">
-                            <i data-lucide="twitter"></i>
-                        </a>
-                        @endif
-                        @if($socialYoutube)
-                        <a href="{{ $socialYoutube }}" target="_blank" class="social-icon-btn social-youtube" aria-label="YouTube">
-                            <i data-lucide="youtube"></i>
-                        </a>
-                        @endif
+                        @foreach($socialLinks as $link)
+                            <a href="{{ $link->url }}" target="_blank"
+                                class="social-icon-btn social-{{ strtolower($link->platform) }}"
+                                aria-label="{{ $link->platform }}">
+                                <i data-lucide="{{ $link->icon }}"></i>
+                            </a>
+                        @endforeach
                     </div>
                 </div>
 
@@ -307,17 +292,37 @@
         box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
     }
 
-    .social-facebook  { background: #1877f2; }
-    .social-facebook:hover  { background: #0d65d9; }
+    .social-facebook {
+        background: #1877f2;
+    }
 
-    .social-instagram { background: linear-gradient(135deg, #f58529, #dd2a7b, #8134af); }
-    .social-instagram:hover { filter: brightness(1.1); }
+    .social-facebook:hover {
+        background: #0d65d9;
+    }
 
-    .social-twitter   { background: #000000; }
-    .social-twitter:hover   { background: #333333; }
+    .social-instagram {
+        background: linear-gradient(135deg, #f58529, #dd2a7b, #8134af);
+    }
 
-    .social-youtube   { background: #ff0000; }
-    .social-youtube:hover   { background: #cc0000; }
+    .social-instagram:hover {
+        filter: brightness(1.1);
+    }
+
+    .social-twitter {
+        background: #000000;
+    }
+
+    .social-twitter:hover {
+        background: #333333;
+    }
+
+    .social-youtube {
+        background: #ff0000;
+    }
+
+    .social-youtube:hover {
+        background: #cc0000;
+    }
 
     .whatsapp-card {
         margin-top: 40px;
