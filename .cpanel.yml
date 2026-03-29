@@ -3,9 +3,6 @@ deployment:
   tasks:
     - export DEPLOYPATH=/home2/mydemosi/villa-web
 
-    # Install/update PHP dependencies
-    - /usr/local/bin/php /usr/local/bin/composer install --no-dev --optimize-autoloader --working-dir=$DEPLOYPATH
-
     # Clear all caches
     - /usr/local/bin/php $DEPLOYPATH/artisan optimize:clear
 
