@@ -611,6 +611,7 @@ body {
 
 html {
     scroll-behavior: smooth;
+    overflow-x: hidden;
 }
 
 img {
@@ -669,6 +670,18 @@ img {
 
 .nav-scrolled .nav-logo {
     color: var(--color-white);
+}
+
+@media (max-width: 767px) {
+    .nav-container {
+        background: linear-gradient(to bottom, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0) 100%);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+    }
+    
+    .nav-scrolled {
+        background: rgba(0, 0, 0, 0.85);
+    }
 }
 
 .nav-capsule {

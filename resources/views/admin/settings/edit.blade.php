@@ -149,6 +149,18 @@
                         @error('whatsapp_number') <span class="text-sm text-red-500">{{ $message }}</span> @enderror
                     </div>
 
+                    <div>
+                        <label for="admin_emails" class="block text-sm font-medium text-gray-700 mb-2">
+                            Notification Emails (Admin)
+                        </label>
+                        <input type="text" name="admin_emails" id="admin_emails"
+                            value="{{ old('admin_emails', $settings['admin_emails'] ?? '') }}"
+                            placeholder="admin1@example.com, admin2@example.com"
+                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                        <p class="mt-1 text-xs text-gray-500">FORMAT: Comma-separated list of emails to receive contact inquiries.</p>
+                        @error('admin_emails') <span class="text-sm text-red-500">{{ $message }}</span> @enderror
+                    </div>
+
                     <div class="col-span-1 md:col-span-2">
                         <label for="site_description" class="block text-sm font-medium text-gray-700 mb-2">
                             Short Description / SEO Meta
@@ -196,6 +208,76 @@
                             placeholder="https://twitter.com/villalanka"
                             class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                         @error('twitter_url') <span class="text-sm text-red-500">{{ $message }}</span> @enderror
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mail Server Configuration Section -->
+            <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+                <h2 class="text-lg font-bold text-gray-900 mb-4 border-b border-gray-100 pb-2">Mail Server Configuration (SMTP)</h2>
+                <p class="text-sm text-gray-600 mb-4">Configure your outgoing mail server here. Common for cPanel or custom webmail. If left blank, the system defaults (.env) will be used.</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label for="mail_host" class="block text-sm font-medium text-gray-700 mb-2">Mail Host (Outgoing Server)</label>
+                        <input type="text" name="mail_host" id="mail_host"
+                            value="{{ old('mail_host', $settings['mail_host'] ?? '') }}"
+                            placeholder="e.g. mail.moonstoneherbalvilla.com"
+                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                        @error('mail_host') <span class="text-sm text-red-500">{{ $message }}</span> @enderror
+                    </div>
+
+                    <div>
+                        <label for="mail_port" class="block text-sm font-medium text-gray-700 mb-2">SMTP Port</label>
+                        <input type="text" name="mail_port" id="mail_port"
+                            value="{{ old('mail_port', $settings['mail_port'] ?? '465') }}"
+                            placeholder="e.g. 465 or 587"
+                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                        @error('mail_port') <span class="text-sm text-red-500">{{ $message }}</span> @enderror
+                    </div>
+
+                    <div>
+                        <label for="mail_username" class="block text-sm font-medium text-gray-700 mb-2">Mail Username</label>
+                        <input type="text" name="mail_username" id="mail_username"
+                            value="{{ old('mail_username', $settings['mail_username'] ?? '') }}"
+                            placeholder="info@moonstoneherbalvilla.com"
+                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                        @error('mail_username') <span class="text-sm text-red-500">{{ $message }}</span> @enderror
+                    </div>
+
+                    <div>
+                        <label for="mail_password" class="block text-sm font-medium text-gray-700 mb-2">Mail Password</label>
+                        <input type="password" name="mail_password" id="mail_password"
+                            placeholder="Leave blank to keep existing password"
+                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                        <p class="mt-1 text-xs text-gray-500">Only re-enter if you want to change it. Password is hidden.</p>
+                        @error('mail_password') <span class="text-sm text-red-500">{{ $message }}</span> @enderror
+                    </div>
+
+                    <div>
+                        <label for="mail_encryption" class="block text-sm font-medium text-gray-700 mb-2">Encryption</label>
+                        <select name="mail_encryption" id="mail_encryption" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                            <option value="ssl" {{ old('mail_encryption', $settings['mail_encryption'] ?? 'ssl') == 'ssl' ? 'selected' : '' }}>SSL (Port 465)</option>
+                            <option value="tls" {{ old('mail_encryption', $settings['mail_encryption'] ?? '') == 'tls' ? 'selected' : '' }}>TLS (Port 587)</option>
+                        </select>
+                        @error('mail_encryption') <span class="text-sm text-red-500">{{ $message }}</span> @enderror
+                    </div>
+
+                    <div>
+                        <label for="mail_from_address" class="block text-sm font-medium text-gray-700 mb-2">Mail From Address</label>
+                        <input type="email" name="mail_from_address" id="mail_from_address"
+                            value="{{ old('mail_from_address', $settings['mail_from_address'] ?? '') }}"
+                            placeholder="Same as Mail Username usually"
+                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                        @error('mail_from_address') <span class="text-sm text-red-500">{{ $message }}</span> @enderror
+                    </div>
+
+                    <div class="col-span-1 md:col-span-2">
+                        <label for="mail_from_name" class="block text-sm font-medium text-gray-700 mb-2">Mail From Name</label>
+                        <input type="text" name="mail_from_name" id="mail_from_name"
+                            value="{{ old('mail_from_name', $settings['mail_from_name'] ?? '') }}"
+                            placeholder="e.g. Moonstone Herbal Villa"
+                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                        @error('mail_from_name') <span class="text-sm text-red-500">{{ $message }}</span> @enderror
                     </div>
                 </div>
             </div>

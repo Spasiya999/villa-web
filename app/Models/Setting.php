@@ -17,6 +17,16 @@ class Setting extends Model
      */
     protected static $cache = [];
 
+    /**
+     * Load all settings into cache in a single query.
+     */
+    public static function loadAll()
+    {
+        if (empty(self::$cache)) {
+            self::$cache = self::pluck('value', 'key')->toArray();
+        }
+    }
+
     public static function get($key, $default = null)
     {
         if (array_key_exists($key, self::$cache)) {

@@ -21,12 +21,21 @@ class ContactController extends Controller
 
         $inquiry = ContactInquiry::create($validated);
 
-        // Send email to admin
-        // Assuming admin email is in config or just use a placeholder for now
-        $adminEmail = config('mail.from.address'); 
+        // Fetch admin emails from settings
+        $adminEmailsSetting = \App\Models\Setting::get('admin_emails');
+        
+        // Split by comma, trim whitespace, and filter empty values
+        if ($adminEmailsSetting) {
+            $adminEmails = array_filter(array_map('trim', explode(',', $adminEmailsSetting)));
+        } else {
+            // Fallback to contact_email or config mail
+            $adminEmails = [\App\Models\Setting::get('contact_email', config('mail.from.address'))];
+        }
         
         try {
-            Mail::to($adminEmail)->send(new ContactInquiryMail($inquiry));
+            if (!empty($adminEmails)) {
+                Mail::to($adminEmails)->send(new ContactInquiryMail($inquiry));
+            }
         } catch (\Exception $e) {
             // Log error but don't stop the user
             \Log::error('Failed to send contact inquiry email: ' . $e->getMessage());
