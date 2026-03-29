@@ -152,6 +152,20 @@
                                 </div>
                             </div>
                         </div>
+
+                        @if($room->images->count() > 0)
+                        <div>
+                            <h3 class="text-lg font-bold text-gray-900 border-b border-gray-200 pb-2 mb-4">Room Gallery</h3>
+                            <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
+                                @foreach($room->images as $image)
+                                <div class="relative aspect-video rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow cursor-pointer" 
+                                     @click="$dispatch('open-modal', 'image-viewer-{{ $image->id }}')">
+                                    <img src="{{ $image->image_url }}" alt="{{ $image->image_alt }}" class="w-full h-full object-cover">
+                                </div>
+                                @endforeach
+                            </div>
+                        </div>
+                        @endif
                     </div>
 
                     <!-- Right Column: Amenities & Meta -->
@@ -222,4 +236,28 @@
             </div>
         </div>
     </div>
+
+    @if($room->images->count() > 0)
+        @foreach($room->images as $image)
+            <x-modal name="image-viewer-{{ $image->id }}" focusable>
+                <div class="p-4">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="text-lg font-medium text-gray-900">{{ $room->name }} - Gallery</h3>
+                        <button @click="$dispatch('close')" class="text-gray-400 hover:text-gray-500">
+                            <span class="sr-only">Close</span>
+                            <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="aspect-video w-full overflow-hidden rounded-lg bg-gray-100">
+                        <img src="{{ $image->image_url }}" alt="{{ $image->image_alt }}" class="w-full h-full object-contain">
+                    </div>
+                    @if($image->image_alt)
+                    <p class="mt-4 text-sm text-gray-500 text-center">{{ $image->image_alt }}</p>
+                    @endif
+                </div>
+            </x-modal>
+        @endforeach
+    @endif
 </x-app-layout>

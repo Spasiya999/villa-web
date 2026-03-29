@@ -44,7 +44,9 @@ class RoomController extends Controller
             'is_available' => 'boolean',
             'sort_order' => 'nullable|integer',
             'amenities' => 'nullable|array',
-            'amenities.*' => 'string'
+            'amenities.*' => 'string',
+            'additional_images' => 'nullable|array',
+            'additional_images.*' => 'image|max:2048'
         ]);
 
         $validated['slug'] = Str::slug($validated['name']);
@@ -55,6 +57,16 @@ class RoomController extends Controller
         }
 
         $room = Room::create($validated);
+
+        if ($request->hasFile('additional_images')) {
+            foreach ($request->file('additional_images') as $image) {
+                $path = $image->store('rooms', 'public');
+                $room->images()->create([
+                    'image_url' => '/storage/' . $path,
+                    'image_alt' => $room->name . ' additional image'
+                ]);
+            }
+        }
 
         return redirect()
             ->route('admin.rooms.show', $room)
@@ -94,7 +106,11 @@ class RoomController extends Controller
             'is_available' => 'boolean',
             'sort_order' => 'nullable|integer',
             'amenities' => 'nullable|array',
-            'amenities.*' => 'string'
+            'amenities.*' => 'string',
+            'additional_images' => 'nullable|array',
+            'additional_images.*' => 'image|max:2048',
+            'remove_images' => 'nullable|array',
+            'remove_images.*' => 'integer|exists:room_images,id'
         ]);
 
         $validated['slug'] = Str::slug($validated['name']);
@@ -109,6 +125,28 @@ class RoomController extends Controller
 
         $room->update($validated);
 
+        // Handle image removal
+        if ($request->has('remove_images')) {
+            $imagesToRemove = $room->images()->whereIn('id', $request->remove_images)->get();
+            foreach ($imagesToRemove as $image) {
+                if ($image->image_url && str_contains($image->image_url, '/storage/')) {
+                    Storage::disk('public')->delete(str_replace('/storage/', '', $image->image_url));
+                }
+                $image->delete();
+            }
+        }
+
+        // Handle new additional images
+        if ($request->hasFile('additional_images')) {
+            foreach ($request->file('additional_images') as $image) {
+                $path = $image->store('rooms', 'public');
+                $room->images()->create([
+                    'image_url' => '/storage/' . $path,
+                    'image_alt' => $room->name . ' additional image'
+                ]);
+            }
+        }
+
         return redirect()
             ->route('admin.rooms.show', $room)
             ->with('success', 'Room updated successfully.');
@@ -119,6 +157,19 @@ class RoomController extends Controller
      */
     public function destroy(Room $room)
     {
+        // Delete main image
+        if ($room->image_url && str_contains($room->image_url, '/storage/')) {
+            Storage::disk('public')->delete(str_replace('/storage/', '', $room->image_url));
+        }
+
+        // Delete additional images
+        foreach ($room->images as $image) {
+            if ($image->image_url && str_contains($image->image_url, '/storage/')) {
+                Storage::disk('public')->delete(str_replace('/storage/', '', $image->image_url));
+            }
+            $image->delete();
+        }
+
         $room->delete();
 
         return redirect()
@@ -143,7 +194,7 @@ class RoomController extends Controller
      */
     public function apiIndex()
     {
-        $rooms = Room::available()->ordered()->get();
+        $rooms = Room::available()->ordered()->with('images')->get();
         return response()->json($rooms);
     }
 
@@ -152,6 +203,7 @@ class RoomController extends Controller
      */
     public function apiShow(Room $room)
     {
+        $room->load('images');
         return response()->json($room);
     }
 }

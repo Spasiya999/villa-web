@@ -96,7 +96,7 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
                         <label for="image" class="block text-sm font-medium text-gray-700 mb-2">
-                            Room Image <span class="text-red-500">*</span>
+                            Main Room Image <span class="text-red-500">*</span>
                         </label>
                         <input type="file" name="image" id="image" accept="image/*" required
                             class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
@@ -104,11 +104,52 @@
 
                     <div>
                         <label for="image_alt" class="block text-sm font-medium text-gray-700 mb-2">
-                            Image Alt Text <span class="text-red-500">*</span>
+                            Main Image Alt Text <span class="text-red-500">*</span>
                         </label>
                         <input type="text" name="image_alt" id="image_alt" value="{{ old('image_alt') }}"
                             placeholder="e.g., Ocean view master suite with king bed" required
                             class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                    </div>
+
+                    <div class="md:col-span-2">
+                        <label class="block text-sm font-medium text-gray-700 mb-2">
+                            Room Gallery (Additional Images)
+                        </label>
+                        
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
+                            <template x-for="(image, index) in galleryImages" :key="image.id">
+                                <div class="relative p-4 border border-dashed border-gray-300 rounded-xl bg-gray-50/50">
+                                    <template x-if="image.preview">
+                                        <div class="mb-3">
+                                            <img :src="image.preview" class="h-40 w-full object-cover rounded-lg border border-gray-200">
+                                        </div>
+                                    </template>
+                                    
+                                    <div class="flex items-center space-x-2">
+                                        <input type="file" name="additional_images[]" 
+                                            @change="updatePreview($event, index)"
+                                            accept="image/*"
+                                            class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
+                                        
+                                        <button type="button" @click="removeGalleryImage(index)" 
+                                            class="p-2 text-red-500 hover:text-red-700 hover:bg-red-50 rounded-lg transition-colors">
+                                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                            </svg>
+                                        </button>
+                                    </div>
+                                </div>
+                            </template>
+                        </div>
+
+                        <button type="button" @click="addGalleryImage()" 
+                            class="inline-flex items-center px-4 py-2 bg-white border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors">
+                            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+                            </svg>
+                            Add Gallery Image
+                        </button>
+                        <p class="mt-2 text-sm text-gray-500">Add individual images to showcase in the room gallery. Each will have a preview.</p>
                     </div>
                 </div>
             </div>
@@ -203,6 +244,7 @@
                 
                 return {
                     amenities: mappedAmenities.length ? mappedAmenities : [{ value: '' }],
+                    galleryImages: [],
                     addAmenity() {
                         this.amenities.push({ value: '' });
                     },
@@ -211,6 +253,18 @@
                             this.amenities.splice(index, 1);
                         } else {
                             this.amenities[0].value = '';
+                        }
+                    },
+                    addGalleryImage() {
+                        this.galleryImages.push({ id: Date.now(), preview: null });
+                    },
+                    removeGalleryImage(index) {
+                        this.galleryImages.splice(index, 1);
+                    },
+                    updatePreview(event, index) {
+                        const file = event.target.files[0];
+                        if (file) {
+                            this.galleryImages[index].preview = URL.createObjectURL(file);
                         }
                     }
                 };

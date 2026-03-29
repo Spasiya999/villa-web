@@ -25,14 +25,16 @@
                 @endphp
                 <figure class="vl-gallery__item vl-gallery__item--col{{ $col }}" data-aos="fade-up"
                     data-aos-delay="{{ $delay }}" data-aos-duration="800" data-aos-once="true">
-                    <div class="vl-gallery__img-wrap">
-                        <img src="{{ $gallery->image_url }}" alt="{{ $gallery->image_alt }}" loading="lazy">
-                        <div class="vl-gallery__overlay" aria-hidden="true">
-                            <div class="vl-gallery__overlay-inner">
-                                <span class="vl-gallery__overlay-num">{{ str_pad($index + 1, 2, '0', STR_PAD_LEFT) }}</span>
+                    <a href="{{ $gallery->image_url }}" class="glightbox" data-gallery="main-gallery">
+                        <div class="vl-gallery__img-wrap">
+                            <img src="{{ $gallery->image_url }}" alt="{{ $gallery->image_alt }}" loading="lazy">
+                            <div class="vl-gallery__overlay" aria-hidden="true">
+                                <div class="vl-gallery__overlay-inner">
+                                    <span class="vl-gallery__overlay-num">{{ str_pad($index + 1, 2, '0', STR_PAD_LEFT) }}</span>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    </a>
                 </figure>
             @endforeach
         </div>

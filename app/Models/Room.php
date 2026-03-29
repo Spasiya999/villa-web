@@ -57,6 +57,11 @@ class Room extends Model
         return $query->orderBy('sort_order')->orderBy('name');
     }
 
+    public function images()
+    {
+        return $this->hasMany(RoomImage::class)->orderBy('sort_order');
+    }
+
     public static function getActive()
     {
         return self::available()->ordered()->get() ?? self::ordered()->get();

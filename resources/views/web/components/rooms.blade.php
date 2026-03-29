@@ -1,5 +1,5 @@
 @php
-    $rooms = \App\Models\Room::getActive();
+    $rooms = \App\Models\Room::getActive()->load('images');
 @endphp
 
 <!-- Rooms Preview Section -->
@@ -12,7 +12,17 @@
         @forelse($rooms as $room)
             <div class="room-card" data-room-id="{{ $room->id }}">
                 <div class="room-image">
-                    <img src="{{ $room->image_url }}" alt="{{ $room->image_alt }}" loading="lazy">
+                    <a href="{{ $room->image_url }}" class="glightbox" data-gallery="room-{{ $room->id }}" data-title="{{ $room->name }}" data-description="{{ $room->image_alt }}">
+                        <img src="{{ $room->image_url }}" alt="{{ $room->image_alt }}" loading="lazy">
+                        <div class="room-image-overlay">
+                            <i data-lucide="maximize-2"></i>
+                            <span>View Gallery</span>
+                        </div>
+                    </a>
+                    {{-- Hidden links for the rest of the gallery --}}
+                    @foreach($room->images as $image)
+                        <a href="{{ $image->image_url }}" class="glightbox hidden" data-gallery="room-{{ $room->id }}" data-title="{{ $room->name }} - Gallery" data-description="{{ $image->image_alt }}"></a>
+                    @endforeach
                 </div>
                 <div class="room-content">
                     <h3 class="room-name">{{ $room->name }}</h3>
@@ -52,6 +62,45 @@
 </section>
 
 <style>
+    .room-image {
+        position: relative;
+        overflow: hidden;
+    }
+
+    .room-image-overlay {
+        position: absolute;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.3);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+        color: white;
+    }
+
+    .room-image-overlay i {
+        width: 2rem;
+        height: 2rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .room-image-overlay span {
+        font-size: 0.9rem;
+        font-weight: 500;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+    }
+
+    .room-image:hover .room-image-overlay {
+        opacity: 1;
+    }
+
+    .glightbox.hidden {
+        display: none;
+    }
+
     .room-amenities {
         display: flex;
         flex-wrap: wrap;

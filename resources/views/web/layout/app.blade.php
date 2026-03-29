@@ -91,6 +91,9 @@
     <link rel="stylesheet" href="{{ asset('vendor/owl-carousel/owl.carousel.min.css') }}">
     <link rel="stylesheet" href="{{ asset('vendor/owl-carousel/owl.theme.default.min.css') }}">
 
+    <!-- GLightbox CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/glightbox/dist/css/glightbox.min.css" />
+
     <script src="{{ asset('vendor/lucide/lucide.min.js') }}"></script>
 
     <!-- jQuery and Owl Carousel JS -->
@@ -254,6 +257,18 @@
             once: true,
             offset: 100,
             easing: 'ease-out-cubic'
+        });
+    </script>
+
+    <!-- GLightbox JS -->
+    <script src="https://cdn.jsdelivr.net/npm/glightbox/dist/js/glightbox.min.js"></script>
+
+    <script>
+        const lightbox = GLightbox({
+            selector: '.glightbox',
+            touchNavigation: true,
+            loop: true,
+            autoplayVideos: true
         });
     </script>
 
