@@ -1,17 +1,26 @@
+---
 deployment:
   tasks:
     - export DEPLOYPATH=/home2/mydemosi/villa-web
 
-    - /bin/cp -R app $DEPLOYPATH
-    - /bin/cp -R bootstrap $DEPLOYPATH
-    - /bin/cp -R config $DEPLOYPATH
-    - /bin/cp -R database $DEPLOYPATH
-    - /bin/cp -R public/* $DEPLOYPATH
-    - /bin/cp -R resources $DEPLOYPATH
-    - /bin/cp -R routes $DEPLOYPATH
-    - /bin/cp -R vendor $DEPLOYPATH
+    # Install/update PHP dependencies
+    - /usr/local/bin/php /usr/local/bin/composer install --no-dev --optimize-autoloader --working-dir=$DEPLOYPATH
 
-    - /bin/cp artisan $DEPLOYPATH
-    - /bin/cp composer.json $DEPLOYPATH
+    # Clear all caches
+    - /usr/local/bin/php $DEPLOYPATH/artisan optimize:clear
 
-    - /usr/local/bin/php $DEPLOYPATH/artisan optimize:clear --ansi
+    # Re-cache for production
+    - /usr/local/bin/php $DEPLOYPATH/artisan config:cache
+    - /usr/local/bin/php $DEPLOYPATH/artisan route:cache
+    - /usr/local/bin/php $DEPLOYPATH/artisan view:cache
+
+    # Run database migrations
+    - /usr/local/bin/php $DEPLOYPATH/artisan migrate --force
+
+    # Remove old storage symlink and re-link (prevents re-deploy errors)
+    - /bin/rm -f $DEPLOYPATH/public/storage
+    - /usr/local/bin/php $DEPLOYPATH/artisan storage:link
+
+    # Fix permissions
+    - /bin/chmod -R 775 $DEPLOYPATH/storage
+    - /bin/chmod -R 775 $DEPLOYPATH/bootstrap/cache
